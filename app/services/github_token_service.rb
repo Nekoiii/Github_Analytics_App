@@ -18,6 +18,7 @@ class GithubTokenService
 
       tokens = []
       installations.each do |installation|
+        next if installation.blank?
         token = fetch_installation_token(installation, jwt)
         tokens.push(token) if token.present?
       end
