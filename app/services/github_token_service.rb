@@ -3,7 +3,11 @@ require 'faraday'
 require 'json'
 
 class GithubTokenService
-  PRIVATE_KEY = OpenSSL::PKey::RSA.new(File.read(ENV.fetch('PRIVATE_KEY_PATH', nil)))
+  private_key_base64 = ENV['PRIVATE_KEY_BASE64']
+  private_key_string = Base64.decode64(private_key_base64)
+  PRIVATE_KEY = OpenSSL::PKey::RSA.new(private_key_string)
+
+  # PRIVATE_KEY = OpenSSL::PKey::RSA.new(File.read(ENV.fetch('PRIVATE_KEY_PATH', nil)))
   MAX_EXPIRATION_TIME = 10 # minutes
 
   class << self
