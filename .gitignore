@@ -1,0 +1,75 @@
+backend/.git
+frontend/.git
+
+# Rules from 'backend' directory
+
+# Ignore bundler config.
+/backend/.bundle
+
+# Ignore all logfiles and tempfiles.
+/backend/log/*
+/backend/tmp/*
+!/backend/log/.keep
+!/backend/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/backend/tmp/pids/*
+!/backend/tmp/pids/
+!/backend/tmp/pids/.keep
+
+# misc
+.DS_Store
+*/.DS_Store
+
+# Ignore uploaded files in development.
+/backend/storage/*
+!/backend/storage/.keep
+/backend/tmp/storage/*
+!/backend/tmp/storage/
+!/backend/tmp/storage/.keep
+
+# Ignore master key for decrypting credentials and more.
+/backend/config/master.key
+
+
+# Github app env file
+/backend/.env
+**/backend/.env
+/backend/.config
+
+
+# keys
+/backend/secrets/*
+**/backend/secrets/*
+
+
+
+# Rules from 'frontend' directory
+
+# dependencies
+/frontend/node_modules
+**/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
+
+# testing
+/frontend/coverage
+
+# production
+/frontend/build
+
+# misc
+/frontend.DS_Store
+**/frontend/.DS_Store
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# Github app env file
+/frontend/.env
+**/frontend/.env
