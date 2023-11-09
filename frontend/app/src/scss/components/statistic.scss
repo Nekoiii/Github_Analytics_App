@@ -1,0 +1,41 @@
+.statistic_component {
+  .date_input {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .stat_list {
+    // display: flex;
+    // flex-wrap: wrap;
+    display: grid;
+    width: 80vw;
+    grid-template-columns: repeat(2, 50%);
+    // grid-column-gap: 20px;
+    // grid-row-gap: 20px;
+    justify-content: center;
+  }
+  .stat_box {
+    border: 5px var(--gray-1) solid;
+    border-radius: 5px;
+    margin: 10px 15px;
+    padding: 10px 13px;
+    // width: fit-content;
+    .stat_box_content {
+      width: fit-content;
+      h4 {
+        margin: 2px 0 10px 0;
+      }
+      span {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+  .is_overall {
+    // width: 100%;
+    grid-column: 1 / -1;
+    border-color: var(--gray-1);
+  }
+  .not_overall {
+    border-color: var(--blue-1);
+  }
+}

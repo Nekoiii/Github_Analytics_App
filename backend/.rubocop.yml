@@ -1,0 +1,165 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+# 基本的に自動生成されるファイル(例えばmigration)などはルール適用しない方針
+AllCops:
+  NewCops: disable
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 6.1
+  Exclude:
+    - "bin/**/*"
+    - "coverage/**/*"
+    - "db/**/*"
+    - "db/schema.rb"
+    - "log/**/*"
+    - "nginx/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - ".pryrc"
+
+Rails:
+  Enabled: true
+
+# Railsのデフォルトでは存在していないstagingも追加したいため(Rails.env.staging?が使えるようになる)
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - test
+    - ec2_development
+    - production
+    - staging
+
+# 最大文字数
+Layout/LineLength:
+  Max: 150
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# クラス内のクラスなどを定義する際の形式を強制しない
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+# if elseで分岐させる方がわかりやすい場合のあるのでOFF
+# Style/GuardClause:
+#   Enabled: false
+
+# 各ファイルにfrozen_string_literal: trueのコメントを追記していくのは大変なため
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# リファクタリングに時間がかかるため、scopeを書く時に複数行になってもlambdaを書かなくて済むようにする
+Style/Lambda:
+  Enabled: false
+
+# config/environments/production.rbの設定(ActiveSupport::Logger.new(STDOUT))で引っかかるため
+Style/GlobalStdStream:
+  Exclude:
+    - "config/**/*"
+
+# config/puma.rbの設定(ENV.fetch)で引っかかるため
+Style/RedundantFetchBlock:
+  Exclude:
+    - "config/**/*"
+
+# Railsが書き出すデフォルトの設定ファイルはargumentsのため
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+# 空のメソッドになると書き方が変わり、書き直すのに効率が悪いので
+Style/EmptyMethod:
+  Enabled: false
+
+# {}を改行した時にdo endに変更するのは効率が悪いため
+Style/BlockDelimiters:
+  Enabled: false
+
+# routes.rbなどのconfig系ファイルやspecのブロックは性質上、25行以内におさめることは現実的ではないのでspec内はルールを無視する
+# concernはclass_methods doやincluded doを使用するので25行以内におさまらないことがある
+# Metrics/BlockLength:
+#   Exclude:
+#     - "spec/**/*"
+#     - "config/**/*"
+#     - "app/models/concerns/**/*"
+#     - "lib/tasks/**/*"
+
+# # ファイル添付のモジュールの実装ボリュームが多いため、回避
+# Metrics/ModuleLength:
+#   Max: 150
+#   Exclude:
+#     - "app/models/concerns/**/*"
+
+# # railsのfat modelは避けづらいのでmodelはクラスの行数制限をなくす。(controllerも送信パラメータが多いので)
+# Metrics/ClassLength:
+#   Exclude:
+#     - "app/models/**/*"
+#     - "app/controllers/**/*"
+#     - "app/services/**/*"
+#     - "app/forms/**/*"
+
+# contextを日本語で書けないため
+RSpec/ContextWording:
+  Enabled: false
+
+# it内に複数のexpectを書くケースはあると考えられるため
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# テストのリファクタリングに時間をかけすぎるのは効率が悪いため
+RSpec/ExampleLength:
+  Enabled: false
+
+# Gemの並び順はアルファベット順でなく、意味を持たせて並べた方が意図が分かりやすいため
+Bundler/OrderedGems:
+  Enabled: false
+
+# 共通処理のletは共通処理内では参照されないのは必須なので
+RSpec/LetSetup:
+  Exclude:
+    - "spec/support/**/*"
+
+# テストのリファクタリングに時間をかけすぎるのは効率が悪いため
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+# タスクのネームスペース名でdescribeを切りたいため
+RSpec/DescribeClass:
+  Exclude:
+    - "spec/tasks/**/*"
+
+# Lambda functions return errorMessage by default
+RSpec/VariableName:
+  EnforcedStyle: snake_case
+  AllowedPatterns:
+    - errorMessage
+
+# より細かくスコープ分けしたい場合があるため
+RSpec/NestedGroups:
+  Max: 4
+# トランザクション内での実行であれば問題ないため
+Rails/SkipsModelValidations:
+  AllowedMethods: ["increment!"]
+
+# boolean型で返すレスポンスデータの命名規則をis_hogeとしたため
+Naming/PredicateName:
+  ForbiddenPrefixes:
+    - "has_"
+    - "have_"
+  NamePrefix:
+    - "has_"
+    - "have_"
+
+# find_by_~というメソッドを独自に定義して使いたいため
+Rails/DynamicFindBy:
+  Enabled: false
+
+# ハッシュのShorthand記法を新・旧両方許可する
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either

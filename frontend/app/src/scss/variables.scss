@@ -1,0 +1,29 @@
+:root {
+  --gray-0: #c6cdd3;
+  --gray-1: #98a2ad;
+  --gray-2: #778595;
+  --gray-3: #556677;
+
+  --blue-1: #a8d5fd;
+  --blue-2: #79beff;
+
+  --red-1: #fd8a8a;
+  --red-2: #ec6868;
+  --red-3: #e20000;
+
+  --font-small: 11px;
+  --font-big: 25px;
+}
+
+.red-1 {
+  color: var(--red-1);
+}
+a.red-1:hover {
+  color: var(--red-2);
+}
+.red-2 {
+  color: var(--red-2);
+}
+.red-2:hover {
+  color: var(--red-3);
+}
