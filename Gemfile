@@ -58,6 +58,11 @@ group :development do
   gem 'rubocop-rspec', require: false
 end
 
+group :production do
+  gem 'aws-sdk-s3', '1.114.0', require: false
+  gem 'pg', '1.3.5'
+end
+
 gem 'graphql'
 gem 'dotenv-rails'
 gem 'jwt'
