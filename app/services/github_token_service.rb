@@ -18,6 +18,7 @@ class GithubTokenService
 
       tokens = []
       installations.each do |installation|
+        Rails.logger.debug "fetch_installation_tokens--installation---: #{installation}"
         next if installation.blank?
         token = fetch_installation_token(installation, jwt)
         tokens.push(token) if token.present?
@@ -53,7 +54,7 @@ class GithubTokenService
     end
 
     def fetch_installation_token(installation, jwt)
-      installation_id = installation['id']
+      installation_id = installation.dig('id')
       response = Faraday.post "https://api.github.com/app/installations/#{installation_id}/access_tokens", {}, {
         'Authorization' => "Bearer #{jwt}", # Use the JWT to get the installation token
         'Accept' => 'application/vnd.github.v3+json'
