@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_095429) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_13_024807) do
   create_table "pull_requests", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "repository_id", null: false
     t.bigint "author_id"
     t.bigint "merger_id"
     t.string "github_id"
-    t.integer "number"
     t.string "title"
     t.string "permalink"
     t.string "base_ref_name"
     t.string "base_ref_oid"
     t.string "head_ref_name"
     t.string "head_ref_oid"
-    t.string "merge_commit"
+    t.integer "number"
+    t.text "merge_commit"
     t.boolean "is_draft"
     t.boolean "closed"
     t.boolean "merged"
@@ -90,6 +90,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_095429) do
     t.string "avatar_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "password"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "provider", default: ""
+    t.string "uid", default: ""
   end
 
   add_foreign_key "pull_requests", "repositories"

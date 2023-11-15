@@ -73,3 +73,12 @@ gem 'faraday_middleware'
 gem 'rake'
 
 gem 'whenever', require: false
+
+# about 'devise': https://fuga-ch85.hatenablog.com/entry/2021/04/03/165849
+gem 'devise'
+gem 'devise-jwt'
+# login with github account:
+# https://fuga-ch85.hatenablog.com/entry/2021/04/10/075536
+# https://www.takayasugiyama.com/entry/2019/11/09/092017
+gem 'omniauth', '~> 1.9.1'
+gem 'omniauth-github'

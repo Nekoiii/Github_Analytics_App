@@ -1,3 +1,7 @@
+require 'jwt'
+require 'faraday'
+require 'json'
+
 class GithubCollaboratorService
   class << self
     # rubocop:disable Metrics/MethodLength

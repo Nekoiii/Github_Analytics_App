@@ -9,14 +9,14 @@ class CreatePullRequests < ActiveRecord::Migration[7.0]
       t.references :merger, foreign_key: { to_table: :users }
       
       t.string :github_id
-      t.integer :number
       t.string :title
       t.string :permalink
       t.string :base_ref_name
       t.string :base_ref_oid
       t.string :head_ref_name
       t.string :head_ref_oid
-      t.string :merge_commit
+      t.integer :number
+      t.text :merge_commit
       
       t.boolean :is_draft
       t.boolean :closed

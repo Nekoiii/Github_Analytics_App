@@ -2,10 +2,11 @@ class GithubPrService
   class << self
     # rubocop:disable Metrics/MethodLength
     def fetch_pull_requests(token, owner, repo_name)
+      Rails.logger.debug "begin to do fetch_pull_requests--"
       query = <<-GRAPHQL
         query {
           repository(owner: "#{owner}", name: "#{repo_name}") {
-            pullRequests(first: 10 %<after_part>s) {
+            pullRequests(first: 100 %<after_part>s) {
               pageInfo {
                 endCursor
                 hasNextPage

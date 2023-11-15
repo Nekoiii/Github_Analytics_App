@@ -7,7 +7,6 @@ class GithubTokenService
   private_key_string = Base64.decode64(private_key_base64)
   PRIVATE_KEY = OpenSSL::PKey::RSA.new(private_key_string)
 
-  # PRIVATE_KEY = OpenSSL::PKey::RSA.new(File.read(ENV.fetch('PRIVATE_KEY_PATH', nil)))
   MAX_EXPIRATION_TIME = 10 # minutes
 
   class << self
@@ -18,12 +17,11 @@ class GithubTokenService
 
       tokens = []
       installations.each do |installation|
-        Rails.logger.debug "fetch_installation_tokens--installation---: #{installation}"
         next if installation.blank?
+
         token = fetch_installation_token(installation, jwt)
         tokens.push(token) if token.present?
       end
-      Rails.logger.debug "fetch_installation_tokens--tokens---: #{tokens}"
       tokens
     end
 
@@ -54,7 +52,7 @@ class GithubTokenService
     end
 
     def fetch_installation_token(installation, jwt)
-      installation_id = installation.dig('id')
+      installation_id = installation['id']
       response = Faraday.post "https://api.github.com/app/installations/#{installation_id}/access_tokens", {}, {
         'Authorization' => "Bearer #{jwt}", # Use the JWT to get the installation token
         'Accept' => 'application/vnd.github.v3+json'

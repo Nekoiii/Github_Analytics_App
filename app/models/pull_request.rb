@@ -2,7 +2,8 @@ class PullRequest < ApplicationRecord
   belongs_to :repository
   # class_name: specifies the actual model name for the "merged_by" association.
   # Without class_name, Rails would try to find a model named "MergedBy".
-  belongs_to :author, class_name: 'User'
+  # *Don't forget to use 'optional: true' here!!!!
+  belongs_to :author, class_name: 'User', optional: true
   belongs_to :merger, class_name: 'User', optional: true
   has_many :reviews, dependent: :destroy
 
