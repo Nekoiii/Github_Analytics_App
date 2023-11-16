@@ -14,7 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Local:
     # redirect_to "http://localhost:3000/?token=#{jwt[0]}&userName=#{@user.github_login}"
     # Deploy:
-    redirect_to "https://github-analytics-app-front-abb2e289cc93.herokuapp.com/?token=#{jwt[0]}&userName=#{@user.github_login}"
+    redirect_to "https://github-analytics-app-front-abb2e289cc93.herokuapp.com/?token=#{jwt[0]}&userName=#{@user.github_login}", allow_other_host: true
   end
 
   def user_not_persisted(request)
