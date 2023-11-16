@@ -5,8 +5,10 @@ class User < ApplicationRecord
   has_many :merged_pull_requests, class_name: 'PullRequest', foreign_key: 'merger_id', dependent: :nullify, inverse_of: :merger
   has_many :authored_reviews, class_name: 'Review', foreign_key: 'author_id', dependent: :nullify, inverse_of: :author
   has_many :statistics, dependent: :nullify
-  has_many :owned_repositories, class_name: 'Repository', foreign_key: 'owner_id', dependent: :nullify, inverse_of: :owner
-
+  has_many :owned_repositories, as: :owner, class_name: 'Repository', dependent: :nullify, inverse_of: :owner
+  has_many :organization_users
+  has_many :organizations, through: :organization_users
+  
   validates :github_login, presence: true
   validates :email, uniqueness: false
   # validates :uid, presence: false, uniqueness: { scope: :provider }

@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_13_024807) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_063944) do
+  create_table "organization_users", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_users_on_organization_id"
+    t.index ["user_id"], name: "index_organization_users_on_user_id"
+  end
+
+  create_table "organizations", charset: "utf8mb4", force: :cascade do |t|
+    t.string "github_login"
+    t.string "avatar_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pull_requests", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "repository_id", null: false
     t.bigint "author_id"
@@ -48,6 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_024807) do
     t.datetime "github_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "owner_type"
+    t.index ["owner_id", "owner_type"], name: "index_repositories_on_owner_id_and_owner_type"
     t.index ["owner_id"], name: "index_repositories_on_owner_id"
   end
 
@@ -100,6 +118,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_024807) do
     t.string "uid", default: ""
   end
 
+  add_foreign_key "organization_users", "organizations"
+  add_foreign_key "organization_users", "users"
   add_foreign_key "pull_requests", "repositories"
   add_foreign_key "pull_requests", "users", column: "author_id"
   add_foreign_key "pull_requests", "users", column: "merger_id"

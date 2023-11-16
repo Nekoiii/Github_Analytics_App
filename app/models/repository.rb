@@ -1,6 +1,6 @@
 class Repository < ApplicationRecord
-  belongs_to :owner, class_name: 'User', inverse_of: :owned_repositories
-
+  belongs_to :owner, polymorphic: true, inverse_of: :owned_repositories
+  
   has_many :pull_requests, dependent: :destroy, inverse_of: :repository
   has_many :statistics, dependent: :destroy
 
