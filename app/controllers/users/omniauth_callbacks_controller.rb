@@ -11,17 +11,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def user_persisted
     jwt = Warden::JWTAuth::UserEncoder.new.call(@user, :user, nil)
-    redirect_to "http://localhost:3000/?token=#{jwt[0]}&userName=#{@user.github_login}"
+    # Local:
+    # redirect_to "http://localhost:3000/?token=#{jwt[0]}&userName=#{@user.github_login}"
+    # Deploy:
+    redirect_to "https://github-analytics-app-api-edddea7fafa4.herokuapp.com/?token=#{jwt[0]}&userName=#{@user.github_login}"
   end
 
   def user_not_persisted(request)
     session['devise.github_data'] = request.env['omniauth.auth'].except(:extra)
-    redirect_to 'http://localhost:3000/'
+    # redirect_to 'http://localhost:3000/'
+    redirect_to 'https://github-analytics-app-api-edddea7fafa4.herokuapp.com/'
   end
 
   def failure
     reset_session
 
-    redirect_to 'http://localhost:3000/'
+    # redirect_to 'http://localhost:3000/'
+    redirect_to 'https://github-analytics-app-api-edddea7fafa4.herokuapp.com/'
   end
 end
