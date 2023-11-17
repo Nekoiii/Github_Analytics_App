@@ -27,8 +27,11 @@ class PullRequest < ApplicationRecord
     # *unfinished: Organization/User
     def update_pr(pull_request, data)
       # *unfinished: need to be refined. (Now it can't find author or merger if that user not in collaborators.)
-      author = User.find_by(github_login: data['author']['login'])
-      merger = User.find_by(github_login: data['mergedBy']['login']) if data['mergedBy']
+      # author = User.find_by(github_login: data['author']['login'])
+      # merger = User.find_by(github_login: data['mergedBy']['login']) if data['mergedBy']
+      author = User.find_or_create_by(github_login: data['author']['login'])
+      merger = User.find_or_create_by(github_login: data['mergedBy']['login']) if data['mergedBy']
+
       updated_attributes = build_updated_attributes(data, author, merger)
 
       pull_request.update!(

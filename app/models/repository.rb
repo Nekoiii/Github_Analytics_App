@@ -7,7 +7,19 @@ class Repository < ApplicationRecord
   class << self
     def update_from_fetched_github_data(data)
       Rails.logger.debug { "Repository--update_from_fetched_github_data---: #{data}" }
-      owner = User.find_or_create_by(github_login: data.dig('owner', 'login'))
+      
+      owner_type=data.dig('owner', '__typename')
+      if owner_type=='User' 
+        owner = User.find_or_create_by(github_login: data.dig('owner', 'login'))
+        
+      elsif owner_type=='Organization'
+        owner = Organization.find_or_create_by(github_login: data.dig('owner', 'login'))
+        
+      else
+         p 'owner_type is neither User nor Organization!'
+        return
+      end
+      
 
       repo = owner.owned_repositories.find_or_initialize_by(github_id: data['id'])
       repo.name = data['name']
@@ -26,6 +38,7 @@ class Repository < ApplicationRecord
 
     def repo_by_name_and_owner(name, owner_github_login)
       owner = User.find_by(github_login: owner_github_login)
+      owner ||= Organization.find_by(github_login: owner_github_login)
       return if owner.blank?
 
       repo = owner.owned_repositories.find_by(name:)

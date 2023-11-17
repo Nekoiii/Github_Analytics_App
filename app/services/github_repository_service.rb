@@ -41,19 +41,42 @@ class GithubRepositoryService
     # rubocop:disable Metrics/MethodLength
     def fetch_repo_info(token, owner, repo_name)
       query = <<-GRAPHQL
-      query {
-        repository(owner: "#{owner}", name: "#{repo_name}") {
+      query{
+        repository(owner:  "#{owner}", name: "#{repo_name}") {
           id
           name
           description
           createdAt
-          owner{
-            login
+          owner {
+            __typename
+            ... on Organization {
+              login
+              name
+            }
+            ... on User {
+              login
+              name
+            }
           }
         }
       }
       GRAPHQL
+      
+      # query = <<-GRAPHQL
+      # query {
+      #   repository(owner: "#{owner}", name: "#{repo_name}") {
+      #     id
+      #     name
+      #     description
+      #     createdAt
+      #     owner{
+      #       login
+      #     }
+      #   }
+      # }
+      # GRAPHQL
       res = GithubAppService.execute_query(token, query)
+      Rails.logger.debug "fetch_repo_info--res---: #{res}"
 
       res.dig('data', 'repository')
     end
