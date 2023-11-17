@@ -14,19 +14,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Local:
     # redirect_to "http://localhost:3000/?token=#{jwt[0]}&userName=#{@user.github_login}"
     # Deploy:
-    redirect_to "https://github-analytics-app-front-abb2e289cc93.herokuapp.com/?token=#{jwt[0]}&userName=#{@user.github_login}", allow_other_host: true
+    # redirect_to "https://github-analytics-app-front-abb2e289cc93.herokuapp.com/?token=#{jwt[0]}&userName=#{@user.github_login}", allow_other_host: true
+    redirect_to "#{ENV['FRONT_APP_URL']}?token=#{jwt[0]}&userName=#{@user.github_login}", allow_other_host: true
   end
 
   def user_not_persisted(request)
     session['devise.github_data'] = request.env['omniauth.auth'].except(:extra)
     # redirect_to 'http://localhost:3000/'
-    redirect_to 'https://github-analytics-app-front-abb2e289cc93.herokuapp.com/'
+    # redirect_to 'https://github-analytics-app-front-abb2e289cc93.herokuapp.com/'
+    redirect_to ENV['FRONT_APP_URL']
   end
 
   def failure
     reset_session
 
     # redirect_to 'http://localhost:3000/'
-    redirect_to 'https://github-analytics-app-front-abb2e289cc93.herokuapp.com/'
+    # redirect_to 'https://github-analytics-app-front-abb2e289cc93.herokuapp.com/'
+    redirect_to ENV['FRONT_APP_URL']
   end
 end
