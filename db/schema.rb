@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_17_012536) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_17_031355) do
   create_table "organization_users", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "organization_id", null: false
@@ -123,7 +123,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_17_012536) do
   add_foreign_key "pull_requests", "repositories"
   add_foreign_key "pull_requests", "users", column: "author_id"
   add_foreign_key "pull_requests", "users", column: "merger_id"
-  add_foreign_key "repositories", "users", column: "owner_id"
   add_foreign_key "reviews", "pull_requests"
   add_foreign_key "reviews", "users", column: "author_id"
   add_foreign_key "statistics", "repositories"
